@@ -13,9 +13,6 @@ const Task = sequelize.define(
     title: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        notEmpty: { msg: "Title is required" }, // Validation per assessment rules[cite: 1]
-      },
     },
     description: {
       type: DataTypes.TEXT,
@@ -25,26 +22,14 @@ const Task = sequelize.define(
       type: DataTypes.ENUM("LOW", "MEDIUM", "HIGH"),
       allowNull: false,
       defaultValue: "MEDIUM",
-      validate: {
-        isIn: {
-          args: [["LOW", "MEDIUM", "HIGH"]],
-          msg: "Priority must be LOW, MEDIUM, or HIGH",
-        },
-      },
     },
     status: {
       type: DataTypes.ENUM("PENDING", "IN_PROGRESS", "COMPLETED"),
       allowNull: false,
       defaultValue: "PENDING",
-      validate: {
-        isIn: {
-          args: [["PENDING", "IN_PROGRESS", "COMPLETED"]],
-          msg: "Status must be PENDING, IN_PROGRESS, or COMPLETED",
-        },
-      },
     },
     dueDate: {
-      type: DataTypes.DATEONLY,
+      type: DataTypes.DATE,
       allowNull: false,
       field: "due_date",
     },

@@ -1,6 +1,7 @@
 import "dotenv/config"; 
 import app from "./app.js";
 import { sequelize } from "./models/index.js";
+import { seedAdminUser } from "./initializer/seedUser.js";
 
 const PORT = process.env.PORT || 3000;
 
@@ -13,6 +14,9 @@ async function startServer() {
 
     // Sync models 
   await sequelize.sync({ force: true });
+
+    // seed data
+  await seedAdminUser();
 
     app.listen(PORT, () => {
       console.log(` Server is running on port ${PORT}`);

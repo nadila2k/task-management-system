@@ -5,7 +5,6 @@ const validate = (schema) => (req, res, next) => {
     ? req.body 
     : {};
 
-
   const result = schema.safeParse(bodyToValidate, { abortEarly: true });
 
   if (!result.success) {

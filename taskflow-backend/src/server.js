@@ -1,6 +1,6 @@
 import "dotenv/config"; 
 import app from "./app.js";
-import sequelize from "./config/database.js";
+import { sequelize } from "./models/index.js";
 
 const PORT = process.env.PORT || 3000;
 
@@ -9,10 +9,10 @@ async function startServer() {
   try {
     // database connection
     await sequelize.authenticate();
-    console.log("✅PostgreSQL database connected via Sequelize");
+    console.log("PostgreSQL database connected via Sequelize");
 
     // Sync models 
-    await sequelize.sync(); 
+  await sequelize.sync({ force: true });
 
     app.listen(PORT, () => {
       console.log(` Server is running on port ${PORT}`);

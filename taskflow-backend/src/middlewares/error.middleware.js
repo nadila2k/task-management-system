@@ -1,22 +1,35 @@
-import { ApiResponse } from "../utils/apiResponse.js";
+import ApiError from "../utils/ApiError.js";
 
-export const globalErrorHandler = (err, req, res, next) => {
-  const statusCode = err.statusCode || 500;
-  const status = err.status || "error";
-  const message = err.message || "Something went wrong on the server";
+export const errorHandler = (err, req, res, next) => {
+  let error = err;
 
- 
-  if (status === "fail") {
-    return ApiResponse.fail(res, message, err.data || null, statusCode);
+
+  if (err instanceof SyntaxError && err.status === 400 && "body" in err) {
+    error = ApiError.badRequest("Invalid JSON payload");
   }
 
 
-  console.error("Global Error Handler Caught:", err);
+  if (err.name === "JsonWebTokenError") {
+    error = ApiError.unauthorized("Invalid token signature");
+  }
+  if (err.name === "TokenExpiredError") {
+    error = ApiError.unauthorized("Token has expired");
+  }
 
-  return ApiResponse.error(
-    res,
+
+  const statusCode = error.statusCode || 500;
+  const status = error.status || (statusCode >= 500 ? "error" : "fail");
+  const message = error.message || "Internal Server Error";
+  const data = error.data || null;
+
+
+  if (statusCode === 500) {
+    console.error("🔥 CRITICAL SERVER ERROR:", err);
+  }
+
+  res.status(statusCode).json({
+    status,
     message,
-    process.env.NODE_ENV === "development" ? err.stack : null,
-    statusCode
-  );
+    data,
+  });
 };

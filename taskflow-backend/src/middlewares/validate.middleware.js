@@ -1,9 +1,24 @@
 import ApiError from "../utils/ApiError.js";
 
 const validate = (schema) => (req, res, next) => {
-  const bodyToValidate = (req.body && typeof req.body === "object" && !Array.isArray(req.body)) 
-    ? req.body 
-    : {};
+  const bodyToValidate =
+    req.body && typeof req.body === "object" && !Array.isArray(req.body)
+      ? req.body
+      : {};
+
+  // Handle empty request body on PUT / PATCH update requests
+  if (!req.body || Object.keys(bodyToValidate).length === 0) {
+    if (req.method === "PUT" || req.method === "PATCH") {
+      return next(
+        ApiError.badRequest("Request body cannot be empty", [
+          {
+            field: "body",
+            message: "At least one field must be provided for update",
+          },
+        ])
+      );
+    }
+  }
 
   const result = schema.safeParse(bodyToValidate, { abortEarly: true });
 

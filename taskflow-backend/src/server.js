@@ -13,7 +13,7 @@ async function startServer() {
     console.log("PostgreSQL database connected via Sequelize");
 
     // Sync models 
-  await sequelize.sync();
+    await sequelize.sync({ alter: true });
 
     // seed data
   await seedAdminUser();

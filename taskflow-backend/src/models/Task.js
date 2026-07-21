@@ -1,6 +1,8 @@
 // src/models/Task.js
 import { DataTypes } from "sequelize";
 import sequelize from "../config/database.js";
+import { TaskPriority } from "../enum/priority.enum.js";
+import { TaskStatus } from "../enum/status.enum.js";
 
 const Task = sequelize.define(
   "Task",
@@ -19,14 +21,14 @@ const Task = sequelize.define(
       allowNull: true,
     },
     priority: {
-      type: DataTypes.ENUM("LOW", "MEDIUM", "HIGH"),
+      type: DataTypes.ENUM(...Object.values(TaskPriority)),
       allowNull: false,
-      defaultValue: "MEDIUM",
+      defaultValue: TaskPriority.MEDIUM,
     },
     status: {
-      type: DataTypes.ENUM("PENDING", "IN_PROGRESS", "COMPLETED"),
+      type: DataTypes.ENUM(...Object.values(TaskStatus)),
       allowNull: false,
-      defaultValue: "PENDING",
+      defaultValue: TaskStatus.PENDING,
     },
     dueDate: {
       type: DataTypes.DATE,

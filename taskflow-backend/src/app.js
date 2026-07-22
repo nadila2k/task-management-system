@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import router from "./routes/index.js";
 import { errorHandler } from "./middlewares/error.middleware.js";
 import ApiError from "./utils/ApiError.js";
@@ -8,6 +9,7 @@ import ApiError from "./utils/ApiError.js";
 
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 // API Routes

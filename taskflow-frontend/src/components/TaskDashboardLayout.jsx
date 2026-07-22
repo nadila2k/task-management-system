@@ -199,7 +199,7 @@ export default function TaskDashboardLayout() {
         component="main"
         sx={{
           flexGrow: 1,
-          p: 3,
+          p: { xs: 2, sm: 3 },
           width: { md: `calc(100% - ${drawerWidth}px)` },
           mt: "64px",
           backgroundColor: theme.palette.mode === "light" ? "#f1f5f9" : "#0f172a",

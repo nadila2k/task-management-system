@@ -1,4 +1,6 @@
 import axios from "axios";
+import { store } from "../store";
+import { logout } from "../store/authSlice";
 
 // Helper to get a cookie value by name
 const getCookie = (name) => {
@@ -58,7 +60,7 @@ apiClient.interceptors.response.use(
       if (error.response.status === 401) {
         deleteCookie("token");
         deleteCookie("accessToken");
-      
+        store.dispatch(logout());
       }
     } else if (error.request) {
 

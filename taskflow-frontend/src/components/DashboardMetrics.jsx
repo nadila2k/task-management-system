@@ -20,7 +20,7 @@ export default function DashboardMetrics({ total, pending, inProgress, completed
       title: "Total Tasks",
       value: total,
       percentage: 100,
-      color: "#3f51b5", // Indigo
+      color: "#3f51b5",
       icon: <AssignmentIcon />,
       subtitle: "All registered tasks",
     },
@@ -28,7 +28,7 @@ export default function DashboardMetrics({ total, pending, inProgress, completed
       title: "Pending Tasks",
       value: pending,
       percentage: getPercentage(pending),
-      color: "#ff9800", // Amber
+      color: "#ff9800",
       icon: <HourglassEmptyIcon />,
       subtitle: "Awaiting execution",
     },
@@ -36,7 +36,7 @@ export default function DashboardMetrics({ total, pending, inProgress, completed
       title: "In Progress",
       value: inProgress,
       percentage: getPercentage(inProgress),
-      color: "#03a9f4", // Light Blue
+      color: "#03a9f4", 
       icon: <PlayArrowIcon />,
       subtitle: "Currently active",
     },
@@ -44,7 +44,7 @@ export default function DashboardMetrics({ total, pending, inProgress, completed
       title: "Completed",
       value: completed,
       percentage: getPercentage(completed),
-      color: "#4caf50", // Green
+      color: "#4caf50",
       icon: <CheckCircleIcon />,
       subtitle: "Successfully finished",
     },
@@ -52,7 +52,7 @@ export default function DashboardMetrics({ total, pending, inProgress, completed
       title: "Overdue Tasks",
       value: overdue,
       percentage: getPercentage(overdue),
-      color: "#f44336", // Red
+      color: "#f44336", 
       icon: <ErrorIcon />,
       subtitle: "Passed due dates",
     },

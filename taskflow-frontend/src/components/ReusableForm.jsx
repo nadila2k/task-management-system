@@ -221,7 +221,7 @@ export default function ReusableForm({
 
   const formContent = (formikProps) => (
     <Form noValidate>
-      <Grid container spacing={3}>
+      <Grid container spacing={{ xs: 2, sm: 3 }}>
         {fields.map((field) => {
         
           const gridProps = field.grid || { xs: 12 };
@@ -232,10 +232,11 @@ export default function ReusableForm({
           );
         })}
       </Grid>
-
+ 
       <Box
         sx={{
           display: "flex",
+          flexDirection: { xs: "column-reverse", sm: "row" },
           justifyContent: "flex-end",
           gap: 2,
           mt: 4,
@@ -254,6 +255,7 @@ export default function ReusableForm({
               fontWeight: 600,
               px: 3,
               py: 1,
+              width: { xs: "100%", sm: "auto" },
               borderColor: "grey.300",
               color: "text.secondary",
               "&:hover": {
@@ -276,6 +278,7 @@ export default function ReusableForm({
             fontWeight: 600,
             px: 4,
             py: 1,
+            width: { xs: "100%", sm: "auto" },
             boxShadow: "0 4px 12px rgba(25, 118, 210, 0.15)",
             "&:hover": {
               boxShadow: "0 6px 16px rgba(25, 118, 210, 0.25)",

@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../store/authSlice";
 import apiClient from "../api/apiClient";
+import { persistAuthSession } from "../utils/authStorage";
 
 const loginValidationSchema = Yup.object().shape({
   email: Yup.string()
@@ -53,19 +54,14 @@ export default function Login() {
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
       const response = await apiClient.post("/auth/login", values);
+      const session = response?.data;
 
-      if (response?.data?.accessToken) {
-        document.cookie = `token=${response.data.accessToken}; path=/; max-age=900; SameSite=Lax;`;
-      }
-      if (response?.data?.refreshToken) {
-        document.cookie = `refreshToken=${response.data.refreshToken}; path=/; max-age=604800; SameSite=Lax;`;
+      if (!session?.accessToken || !session?.user) {
+        throw new Error("Invalid login response from server.");
       }
 
-      if (response?.data?.user) {
-        dispatch(loginSuccess(response.data.user));
-      } else {
-        dispatch(loginSuccess({ name: "Demo User", email: values.email }));
-      }
+      persistAuthSession(session);
+      dispatch(loginSuccess(session.user));
 
       toast.success(response.message || "Welcome back! Login successful.");
       navigate("/task-dashboard");

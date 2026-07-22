@@ -1,20 +1,20 @@
-import Login from "../pages/Login";
 import NotFound from "../pages/NotFound";
 import TaskDashboard from "../pages/TaskDashboard";
 import Tasks from "../pages/Tasks";
-import TaskStats from "../pages/TaskStats";
+
 import ProtectedRoute from "../components/ProtectedRoute";
+import GuestRoute from "../components/GuestRoute";
 import TaskDashboardLayout from "../components/TaskDashboardLayout";
 import { Navigate } from "react-router-dom";
 
 export const routes = [
   {
     path: "/",
-    element: <Navigate to="/login" replace />,
+    element: <Navigate to="/task-dashboard" replace />,
   },
   {
     path: "/login",
-    element: <Login />,
+    element: <GuestRoute />,
   },
   {
     element: <ProtectedRoute />,
@@ -24,7 +24,6 @@ export const routes = [
         element: <TaskDashboardLayout />,
         children: [
           { index: true, element: <TaskDashboard /> },
-          { path: "task-stats", element: <TaskStats /> },
           { path: "tasks", element: <Tasks /> },
         ],
       },

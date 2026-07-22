@@ -12,7 +12,6 @@ import {
 } from "@mui/material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import AssignmentIcon from "@mui/icons-material/Assignment";
-import BarChartIcon from "@mui/icons-material/BarChart";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useColorMode } from "../theme/ThemeContext";
@@ -25,7 +24,6 @@ export default function SidebarMenu({ onItemClick }) {
   const menuItems = [
     { text: "Dashboard", icon: <DashboardIcon />, path: "/task-dashboard" },
     { text: "Tasks", icon: <AssignmentIcon />, path: "/task-dashboard/tasks" },
-    { text: "Stats", icon: <BarChartIcon />, path: "/task-dashboard/task-stats" },
   ];
 
   return (

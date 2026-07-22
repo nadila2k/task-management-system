@@ -21,6 +21,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../store/authSlice";
 import { useColorMode } from "../theme/ThemeContext";
 import SidebarMenu from "./SidebarMenu";
+import apiClient from "../api/apiClient";
+import { clearAuthSession, getRefreshToken } from "../utils/authStorage";
 
 const drawerWidth = 240;
 
@@ -47,16 +49,20 @@ export default function TaskDashboardLayout() {
     setAnchorEl(null);
   };
 
-  const handleLogout = () => {
-    // Clear cookies
-    document.cookie = "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=Lax;";
-    document.cookie = "refreshToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=Lax;";
-    
+  const handleLogout = async () => {
+    const refreshToken = getRefreshToken();
 
-    dispatch(logout());
-    
-    // Redirect to login
-    navigate("/login");
+    try {
+      if (refreshToken) {
+        await apiClient.post("/auth/logout", { refreshToken });
+      }
+    } catch {
+      // Clear local session even if backend logout fails
+    } finally {
+      clearAuthSession();
+      dispatch(logout());
+      navigate("/login");
+    }
   };
 
   const menuItems = [

@@ -1,41 +1,39 @@
 import { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { Navigate, Outlet } from "react-router-dom";
 import { Box, CircularProgress } from "@mui/material";
-import { loginSuccess, logout } from "../store/authSlice";
+import { loginSuccess } from "../store/authSlice";
 import { getAccessToken, hasPersistedSession } from "../utils/authStorage";
 import { restoreSession } from "../api/apiClient";
 import { store } from "../store";
+import Login from "../pages/Login";
 
-export default function ProtectedRoute() {
+export default function GuestRoute() {
   const dispatch = useDispatch();
-  const [isBootstrapping, setIsBootstrapping] = useState(true);
-  const [sessionValid, setSessionValid] = useState(false);
+  const [isChecking, setIsChecking] = useState(true);
+  const [shouldRedirect, setShouldRedirect] = useState(false);
 
   useEffect(() => {
     let active = true;
 
-    const bootstrapSession = async () => {
-      const { user, isAuthenticated } = store.getState().auth;
+    const checkSession = async () => {
+      const { user } = store.getState().auth;
 
       if (!hasPersistedSession()) {
-        if (isAuthenticated) {
-          dispatch(logout());
-        }
         if (active) {
-          setSessionValid(false);
-          setIsBootstrapping(false);
+          setShouldRedirect(false);
+          setIsChecking(false);
         }
         return;
       }
 
       if (getAccessToken()) {
-        if (user && !isAuthenticated) {
+        if (user) {
           dispatch(loginSuccess(user));
         }
         if (active) {
-          setSessionValid(Boolean(user));
-          setIsBootstrapping(false);
+          setShouldRedirect(Boolean(user));
+          setIsChecking(false);
         }
         return;
       }
@@ -45,23 +43,22 @@ export default function ProtectedRoute() {
 
       if (restored && user) {
         dispatch(loginSuccess(user));
-        setSessionValid(true);
+        setShouldRedirect(true);
       } else {
-        dispatch(logout());
-        setSessionValid(false);
+        setShouldRedirect(false);
       }
 
-      setIsBootstrapping(false);
+      setIsChecking(false);
     };
 
-    bootstrapSession();
+    checkSession();
 
     return () => {
       active = false;
     };
   }, [dispatch]);
 
-  if (isBootstrapping) {
+  if (isChecking) {
     return (
       <Box
         sx={{
@@ -76,9 +73,9 @@ export default function ProtectedRoute() {
     );
   }
 
-  if (!sessionValid) {
-    return <Navigate to="/login" replace />;
+  if (shouldRedirect) {
+    return <Navigate to="/task-dashboard" replace />;
   }
 
-  return <Outlet />;
+  return <Login />;
 }

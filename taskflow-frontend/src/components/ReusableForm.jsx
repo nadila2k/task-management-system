@@ -29,6 +29,7 @@ export default function ReusableForm({
   onCancel,
   withPaper = true,
   paperTitle,
+  submitFullWidth = false,
 }) {
   const renderField = (
     field,
@@ -43,6 +44,7 @@ export default function ReusableForm({
       disabled,
       required,
       rows,
+      size,
     } = field;
 
     const hasError = touched[name] && Boolean(errors[name]);
@@ -150,6 +152,7 @@ export default function ReusableForm({
             disabled={disabled}
             required={required}
             variant="outlined"
+            size={size}
           />
         );
 
@@ -170,6 +173,7 @@ export default function ReusableForm({
             disabled={disabled}
             required={required}
             variant="outlined"
+            size={size}
             slotProps={{
               inputLabel: {
                 shrink: true,
@@ -195,6 +199,7 @@ export default function ReusableForm({
             disabled={disabled}
             required={required}
             variant="outlined"
+            size={size}
           />
         );
 
@@ -216,6 +221,7 @@ export default function ReusableForm({
             disabled={disabled}
             required={required}
             variant="outlined"
+            size={size}
           />
         );
     }
@@ -237,8 +243,10 @@ export default function ReusableForm({
       <Box
         sx={{
           display: "flex",
-          flexDirection: { xs: "column-reverse", sm: "row" },
-          justifyContent: "flex-end",
+          flexDirection: submitFullWidth
+            ? "column"
+            : { xs: "column-reverse", sm: "row" },
+          justifyContent: submitFullWidth ? "stretch" : "flex-end",
           gap: 2,
           mt: 4,
         }}
@@ -278,8 +286,8 @@ export default function ReusableForm({
             textTransform: "none",
             fontWeight: 600,
             px: 4,
-            py: 1,
-            width: { xs: "100%", sm: "auto" },
+            py: submitFullWidth ? 1.25 : 1,
+            width: submitFullWidth ? "100%" : { xs: "100%", sm: "auto" },
             boxShadow: "0 4px 12px rgba(25, 118, 210, 0.15)",
             "&:hover": {
               boxShadow: "0 6px 16px rgba(25, 118, 210, 0.25)",

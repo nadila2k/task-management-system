@@ -17,6 +17,7 @@ export default function TaskTable({
   tasks,
   onEditClick,
   onDeleteClick,
+  onRowClick,
   sortBy,
   sortOrder,
   onSortChange,
@@ -133,6 +134,7 @@ export default function TaskTable({
                 task={task}
                 onEditClick={onEditClick}
                 onDeleteClick={onDeleteClick}
+                onRowClick={onRowClick}
               />
             ))}
           </TableBody>

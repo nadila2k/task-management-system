@@ -2,7 +2,7 @@ import { TableRow, TableCell, Chip, IconButton, Tooltip, Typography } from "@mui
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-export default function TaskTableRow({ task, onEditClick, onDeleteClick }) {
+export default function TaskTableRow({ task, onEditClick, onDeleteClick, onRowClick }) {
   // Helper to format priority color palette
   const getPriorityStyle = (priority) => {
     switch (priority) {
@@ -38,9 +38,11 @@ export default function TaskTableRow({ task, onEditClick, onDeleteClick }) {
   return (
     <TableRow
       hover
+      onClick={() => onRowClick(task)}
       sx={{
         "&:last-child td, &:last-child th": { border: 0 },
         transition: "background-color 0.2s ease",
+        cursor: "pointer",
       }}
     >
       {/* Title */}
@@ -93,7 +95,7 @@ export default function TaskTableRow({ task, onEditClick, onDeleteClick }) {
       </TableCell>
 
       {/* Actions */}
-      <TableCell align="right" sx={{ py: 1 }}>
+      <TableCell align="right" sx={{ py: 1 }} onClick={(e) => e.stopPropagation()}>
         <Tooltip title="Edit Task">
           <IconButton onClick={() => onEditClick(task)} size="small" color="primary" sx={{ mr: 1 }}>
             <EditIcon fontSize="small" />

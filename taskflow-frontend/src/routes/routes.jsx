@@ -3,9 +3,9 @@ import NotFound from "../pages/NotFound";
 import TaskDashboard from "../pages/TaskDashboard";
 import Tasks from "../pages/Tasks";
 import TaskStats from "../pages/TaskStats";
+import FormDemo from "../pages/FormDemo";
 
 export const routes = [
-
     {
         path: '/login',
         element: <Login />

@@ -4,6 +4,7 @@ import TaskFilters from "../components/TaskFilters";
 import TaskTable from "../components/TaskTable";
 import TaskDialog from "../components/TaskDialog";
 import DeleteConfirmDialog from "../components/DeleteConfirmDialog";
+import TaskDetailsDialog from "../components/TaskDetailsDialog";
 import apiClient from "../api/apiClient";
 import { toast } from "react-hot-toast";
 
@@ -27,6 +28,10 @@ export default function Tasks() {
   const [selectedTask, setSelectedTask] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
+
+  // Task Detail Dialog States
+  const [detailTask, setDetailTask] = useState(null);
+  const [detailOpen, setDetailOpen] = useState(false);
 
   const triggerRefresh = () => setRefreshTrigger((prev) => prev + 1);
 
@@ -86,6 +91,11 @@ export default function Tasks() {
 
   const handleDeleteClick = (id) => {
     setDeleteId(id);
+  };
+
+  const handleRowClick = (task) => {
+    setDetailTask(task);
+    setDetailOpen(true);
   };
 
   const handleDeleteConfirm = async () => {
@@ -150,6 +160,7 @@ export default function Tasks() {
           tasks={tasks}
           onEditClick={handleEditClick}
           onDeleteClick={handleDeleteClick}
+          onRowClick={handleRowClick}
           sortBy={sortBy}
           sortOrder={sortOrder}
           onSortChange={handleSortChange}
@@ -172,6 +183,15 @@ export default function Tasks() {
           open={Boolean(deleteId)}
           onClose={() => setDeleteId(null)}
           onConfirm={handleDeleteConfirm}
+        />
+      )}
+
+      {/* Task Details Modal */}
+      {detailOpen && (
+        <TaskDetailsDialog
+          open={detailOpen}
+          onClose={() => setDetailOpen(false)}
+          task={detailTask}
         />
       )}
     </Box>

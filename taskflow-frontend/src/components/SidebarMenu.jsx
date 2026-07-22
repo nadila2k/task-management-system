@@ -85,7 +85,9 @@ export default function SidebarMenu({ onItemClick }) {
                 <ListItemIcon sx={{ minWidth: 40 }}>{item.icon}</ListItemIcon>
                 <ListItemText
                   primary={item.text}
-                  primaryTypographyProps={{ fontWeight: isActive ? 600 : 500 }}
+                  slotProps={{
+                    primary: { fontWeight: isActive ? 600 : 500 },
+                  }}
                 />
               </ListItemButton>
             </ListItem>

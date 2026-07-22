@@ -119,16 +119,15 @@ export default function Tasks() {
     <Box>
       <Box sx={{ mb: 3 }}>
         <Typography
-          variant={{ xs: "h5", sm: "h4" }}
           component="h1"
           fontWeight={800}
           letterSpacing="-0.025em"
           color="text.primary"
-          sx={{ mb: 1 }}
+          sx={{ mb: 1, typography: { xs: "h5", sm: "h4" } }}
         >
           Task Management
         </Typography>
-        <Typography variant={{ xs: "body2", sm: "body1" }} color="text.secondary">
+        <Typography color="text.secondary" sx={{ typography: { xs: "body2", sm: "body1" } }}>
           Create, edit, filter, and track all your team's tasks in real-time.
         </Typography>
       </Box>

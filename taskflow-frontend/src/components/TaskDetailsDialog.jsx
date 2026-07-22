@@ -43,10 +43,12 @@ export default function TaskDetailsDialog({ open, onClose, task }) {
       onClose={onClose}
       maxWidth="sm"
       fullWidth
-      PaperProps={{
-        sx: {
-          borderRadius: 3,
-          p: 1,
+      slotProps={{
+        paper: {
+          sx: {
+            borderRadius: 3,
+            p: 1,
+          },
         },
       }}
     >

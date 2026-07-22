@@ -170,9 +170,6 @@ export default function ReusableForm({
             disabled={disabled}
             required={required}
             variant="outlined"
-            InputLabelProps={{
-              shrink: true,
-            }}
             slotProps={{
               inputLabel: {
                 shrink: true,

@@ -17,24 +17,24 @@ export default function UrgentTasksPanel({ urgentTasks, onTaskClick }) {
   const getPriorityStyle = (priority) => {
     switch (priority) {
       case "HIGH":
-        return { color: "error.main", bg: "error.light" };
+        return { color: "error.main", bgcolor: (theme) => alpha(theme.palette.error.main, 0.08) };
       case "MEDIUM":
-        return { color: "warning.main", bg: "warning.light" };
+        return { color: "warning.main", bgcolor: (theme) => alpha(theme.palette.warning.main, 0.08) };
       case "LOW":
       default:
-        return { color: "success.main", bg: "success.light" };
+        return { color: "success.main", bgcolor: (theme) => alpha(theme.palette.success.main, 0.08) };
     }
   };
 
   const getStatusStyle = (status) => {
     switch (status) {
       case "COMPLETED":
-        return { color: "success.main", bg: "success.light" };
+        return { color: "success.main", bgcolor: (theme) => alpha(theme.palette.success.main, 0.12) };
       case "IN_PROGRESS":
-        return { color: "info.main", bg: "info.light" };
+        return { color: "info.main", bgcolor: (theme) => alpha(theme.palette.info.main, 0.12) };
       case "PENDING":
       default:
-        return { color: "warning.main", bg: "warning.light" };
+        return { color: "warning.main", bgcolor: (theme) => alpha(theme.palette.warning.main, 0.12) };
     }
   };
 
@@ -94,15 +94,18 @@ export default function UrgentTasksPanel({ urgentTasks, onTaskClick }) {
                     <Grid size={{ xs: 12, sm: 6 }}>
                       <ListItemText
                         primary={task.title}
-                        primaryTypographyProps={{
-                          fontWeight: 700,
-                          variant: "body2",
-                          color: "text.primary",
-                          sx: {
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                            whiteSpace: "nowrap",
+                        slotProps={{
+                          primary: {
+                            fontWeight: 700,
+                            variant: "body2",
+                            color: "text.primary",
+                            sx: {
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                              whiteSpace: "nowrap",
+                            },
                           },
+                          secondary: { component: "div" },
                         }}
                         secondary={
                           <Box sx={{ display: "flex", gap: 1, mt: 0.5, flexWrap: "wrap" }}>
@@ -114,8 +117,7 @@ export default function UrgentTasksPanel({ urgentTasks, onTaskClick }) {
                                 height: 18,
                                 fontSize: "0.65rem",
                                 fontWeight: 800,
-                                color: prioStyle.color,
-                                backgroundColor: (theme) => alpha(theme.palette.error.main, 0.08),
+                                ...prioStyle,
                               }}
                             />
                             {isTaskOverdue && (

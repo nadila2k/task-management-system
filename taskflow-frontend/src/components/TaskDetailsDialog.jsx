@@ -75,7 +75,7 @@ export default function TaskDetailsDialog({ open, onClose, task }) {
         </Box>
 
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={4}>
+          <Grid size={{ xs: 12, sm: 4 }}>
             <Box sx={{ display: "flex", flexDirection: "column" }}>
               <Typography variant="caption" color="text.secondary" fontWeight={600} textTransform="uppercase" sx={{ mb: 1 }}>
                 Status
@@ -96,7 +96,7 @@ export default function TaskDetailsDialog({ open, onClose, task }) {
             </Box>
           </Grid>
 
-          <Grid item xs={12} sm={4}>
+          <Grid size={{ xs: 12, sm: 4 }}>
             <Box sx={{ display: "flex", flexDirection: "column" }}>
               <Typography variant="caption" color="text.secondary" fontWeight={600} textTransform="uppercase" sx={{ mb: 1 }}>
                 Priority
@@ -117,7 +117,7 @@ export default function TaskDetailsDialog({ open, onClose, task }) {
             </Box>
           </Grid>
 
-          <Grid item xs={12} sm={4}>
+          <Grid size={{ xs: 12, sm: 4 }}>
             <Box sx={{ display: "flex", flexDirection: "column" }}>
               <Typography variant="caption" color="text.secondary" fontWeight={600} textTransform="uppercase" sx={{ mb: 1 }}>
                 Due Date

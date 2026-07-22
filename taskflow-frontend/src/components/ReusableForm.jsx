@@ -173,6 +173,11 @@ export default function ReusableForm({
             InputLabelProps={{
               shrink: true,
             }}
+            slotProps={{
+              inputLabel: {
+                shrink: true,
+              },
+            }}
           />
         );
 
@@ -223,10 +228,9 @@ export default function ReusableForm({
     <Form noValidate>
       <Grid container spacing={{ xs: 2, sm: 3 }}>
         {fields.map((field) => {
-        
           const gridProps = field.grid || { xs: 12 };
           return (
-            <Grid item key={field.name} {...gridProps}>
+            <Grid key={field.name} size={gridProps}>
               {renderField(field, formikProps)}
             </Grid>
           );

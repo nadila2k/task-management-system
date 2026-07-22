@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -10,6 +10,8 @@ import {
   Paper,
   TableSortLabel,
   Typography,
+  useTheme,
+  useMediaQuery,
 } from "@mui/material";
 import TaskTableRow from "./TaskTableRow";
 
@@ -22,8 +24,16 @@ export default function TaskTable({
   sortOrder,
   onSortChange,
 }) {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(() => (window.innerWidth < 600 ? 5 : 10));
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setRowsPerPage(isMobile ? 5 : 10);
+  }, [isMobile]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);

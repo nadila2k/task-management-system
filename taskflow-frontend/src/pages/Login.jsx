@@ -6,6 +6,8 @@ import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "../store/authSlice";
 import apiClient from "../api/apiClient";
 
 const loginValidationSchema = Yup.object().shape({
@@ -20,6 +22,7 @@ const loginValidationSchema = Yup.object().shape({
 export default function Login() {
   const { mode, toggleColorMode } = useColorMode();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const initialValues = {
     email: "",
@@ -49,12 +52,19 @@ export default function Login() {
     try {
       const response = await apiClient.post("/auth/login", values);
       
-      // Save tokens in cookies
+    
       if (response?.data?.accessToken) {
         document.cookie = `token=${response.data.accessToken}; path=/; max-age=900; SameSite=Lax;`;
       }
       if (response?.data?.refreshToken) {
         document.cookie = `refreshToken=${response.data.refreshToken}; path=/; max-age=604800; SameSite=Lax;`;
+      }
+
+    
+      if (response?.data?.user) {
+        dispatch(loginSuccess(response.data.user));
+      } else {
+        dispatch(loginSuccess({ name: "Demo User", email: values.email }));
       }
 
       toast.success(response.message || "Welcome back! Login successful.");
